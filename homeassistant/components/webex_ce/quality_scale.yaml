@@ -1,8 +1,8 @@
 rules:
   # Bronze
   action-setup:
-    status: exempt
-    comment: Integration does not register custom actions.
+    status: done
+    comment: Service actions are registered in async_setup in services.py.
   appropriate-polling:
     status: done
     comment: Uses push-based feedback subscriptions via WebSocket.
@@ -11,15 +11,13 @@ rules:
     comment: Will be added when integration is ready for production.
   common-modules:
     status: done
-    comment: Uses client.py module for API interaction.
-  config-flow-test-coverage:
-    status: exempt
-    comment: Tests will be added in follow-up PR.
+    comment: Uses client.py for API interaction and entity.py for the base entity.
+  config-flow-test-coverage: done
   config-flow: done
   dependency-transparency: done
   docs-actions:
     status: exempt
-    comment: Integration does not register custom actions.
+    comment: Documentation will be added when integration is ready for production.
   docs-high-level-description:
     status: exempt
     comment: Documentation will be added when integration is ready for production.
@@ -48,16 +46,14 @@ rules:
   docs-installation-parameters:
     status: exempt
     comment: Documentation will be added when integration is ready for production.
-  entity-unavailable: done
+  entity-unavailable:
+    status: done
+    comment: The client watches the connection and reconnects when it is lost.
   integration-owner: done
   log-when-unavailable: done
   parallel-updates: done
-  reauthentication-flow:
-    status: exempt
-    comment: Devices use local authentication, no cloud reauth needed.
-  test-coverage:
-    status: exempt
-    comment: Tests will be expanded in follow-up PR.
+  reauthentication-flow: done
+  test-coverage: done
 
   # Gold
   devices: todo

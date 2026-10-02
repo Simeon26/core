@@ -47,6 +47,20 @@ camera_preset_store:
           min: 1
           max: 35
           mode: box
+    camera_id:
+      required: false
+      default: 1
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 7
+          mode: box
+    name:
+      required: false
+      example: "Whiteboard"
+      selector:
+        text:
 
 camera_position_set:
   target:

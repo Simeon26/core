@@ -1,7 +1,9 @@
 {
   "config": {
     "abort": {
-      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]"
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "reauth_successful": "[%key:common::config_flow::abort::reauth_successful%]",
+      "wrong_device": "The credentials belong to a different Webex device than the one you set up."
     },
     "error": {
       "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
@@ -9,16 +11,41 @@
       "unknown": "[%key:common::config_flow::error::unknown%]"
     },
     "step": {
+      "reauth_confirm": {
+        "data": {
+          "password": "[%key:common::config_flow::data::password%]",
+          "username": "[%key:common::config_flow::data::username%]"
+        },
+        "data_description": {
+          "password": "[%key:component::webex_ce::config::step::user::data_description::password%]",
+          "username": "[%key:component::webex_ce::config::step::user::data_description::username%]"
+        },
+        "description": "The Webex device at {host} rejected the stored credentials. Enter the username and password of a local user account on the device.",
+        "title": "[%key:common::config_flow::title::reauth%]"
+      },
       "user": {
         "data": {
           "host": "[%key:common::config_flow::data::host%]",
           "password": "[%key:common::config_flow::data::password%]",
           "username": "[%key:common::config_flow::data::username%]"
+        },
+        "data_description": {
+          "host": "The hostname or IP address of your Webex device.",
+          "password": "The password of a local user account on the device.",
+          "username": "The username of a local user account on the device."
         }
       }
     }
   },
   "entity": {
+    "binary_sensor": {
+      "recording": {
+        "name": "Recording"
+      },
+      "streaming": {
+        "name": "Streaming"
+      }
+    },
     "button": {
       "accept_call": {
         "name": "Accept call"
@@ -73,25 +100,27 @@
         "name": "Current meeting"
       },
       "network_status": {
-        "name": "Network status"
+        "name": "Network status",
+        "state": {
+          "connected": "Connected",
+          "disconnected": "Disconnected"
+        }
       },
       "next_meeting": {
         "name": "Next meeting"
-      },
-      "recording": {
-        "name": "Recording"
       },
       "relative_humidity": {
         "name": "Relative humidity"
       },
       "room_occupancy": {
-        "name": "Room occupancy"
+        "name": "Room occupancy",
+        "state": {
+          "no": "Not occupied",
+          "yes": "Occupied"
+        }
       },
       "sound_level": {
         "name": "Sound level"
-      },
-      "streaming": {
-        "name": "Streaming"
       },
       "system_uptime": {
         "name": "System uptime"
@@ -110,6 +139,14 @@
       "video_mute": {
         "name": "Video mute"
       }
+    }
+  },
+  "exceptions": {
+    "command_failed": {
+      "message": "Failed to run {action} on {host}: {error}"
+    },
+    "invalid_target": {
+      "message": "Select at least one entity of a loaded Webex device as the target."
     }
   },
   "services": {
@@ -148,6 +185,14 @@
     "camera_preset_store": {
       "description": "Store current camera position as a preset",
       "fields": {
+        "camera_id": {
+          "description": "Camera ID (1 for main camera)",
+          "name": "Camera ID"
+        },
+        "name": {
+          "description": "Optional name for the preset",
+          "name": "Name"
+        },
         "preset_id": {
           "description": "Camera preset ID (1-35)",
           "name": "Preset ID"

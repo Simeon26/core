@@ -2,21 +2,75 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from dataclasses import dataclass
 import logging
 from typing import Any
 
-from homeassistant.components.switch import SwitchEntity
+from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
-from . import WebexCEConfigEntry
-from .const import DOMAIN
+from .entity import WebexCEEntity
+from .models import WebexCEConfigEntry, WebexCEData
 
 _LOGGER = logging.getLogger(__name__)
 
 # Limit parallel updates to avoid overwhelming device
 PARALLEL_UPDATES = 1
+
+
+@dataclass(frozen=True, kw_only=True)
+class WebexCESwitchEntityDescription(SwitchEntityDescription):
+    """Describes a Webex CE switch."""
+
+    status_path: list[str]
+    is_on_fn: Callable[[Any], bool]
+    on_command: tuple[list[str], dict[str, Any]]
+    off_command: tuple[list[str], dict[str, Any]]
+    icon_off: str | None = None
+
+
+SWITCHES: tuple[WebexCESwitchEntityDescription, ...] = (
+    WebexCESwitchEntityDescription(
+        key="microphone_mute",
+        translation_key="microphone_mute",
+        icon="mdi:microphone-off",
+        icon_off="mdi:microphone",
+        status_path=["Status", "Audio", "Microphones", "Mute"],
+        is_on_fn=lambda value: value == "On",
+        on_command=(["Audio", "Microphones", "Mute"], {}),
+        off_command=(["Audio", "Microphones", "Unmute"], {}),
+    ),
+    WebexCESwitchEntityDescription(
+        key="video_mute",
+        translation_key="video_mute",
+        icon="mdi:video-off",
+        icon_off="mdi:video",
+        status_path=["Status", "Video", "Input", "MainVideoMute"],
+        is_on_fn=lambda value: value == "On",
+        on_command=(["Video", "Input", "MainVideo", "Mute"], {}),
+        off_command=(["Video", "Input", "MainVideo", "Unmute"], {}),
+    ),
+    WebexCESwitchEntityDescription(
+        key="presentation",
+        translation_key="presentation",
+        icon="mdi:presentation",
+        status_path=["Status", "Conference", "Presentation", "Mode"],
+        is_on_fn=lambda value: value in ("Sending", "Receiving", "On"),
+        on_command=(["Presentation", "Start"], {}),
+        off_command=(["Presentation", "Stop"], {}),
+    ),
+    WebexCESwitchEntityDescription(
+        key="self_view",
+        translation_key="self_view",
+        icon="mdi:monitor-eye",
+        status_path=["Status", "Video", "Selfview", "Mode"],
+        is_on_fn=lambda value: value == "On",
+        on_command=(["Video", "Selfview", "Set"], {"Mode": "On"}),
+        off_command=(["Video", "Selfview", "Set"], {"Mode": "Off"}),
+    ),
+)
 
 
 async def async_setup_entry(
@@ -25,294 +79,64 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up Webex CE switch entities."""
-    client = entry.runtime_data
-
-    # Get device info for device registry
-    device_info = await client.get_device_info()
-
-    # Create device info dict
-    device_info_dict = DeviceInfo(
-        identifiers={(DOMAIN, device_info["serial"])},
-        name=entry.title,
-        manufacturer="Cisco",
-        model=device_info["product"],
-        sw_version=device_info["software_version"],
-    )
-
-    # Add microphone and video mute switches
     async_add_entities(
-        [
-            WebexCEMicrophoneMuteSwitch(client, device_info_dict),
-            WebexCEVideoMuteSwitch(client, device_info_dict),
-            WebexCEPresentationSwitch(client, device_info_dict),
-            WebexCESelfViewSwitch(client, device_info_dict),
-        ]
+        WebexCESwitch(entry.runtime_data, description) for description in SWITCHES
     )
 
 
-class WebexCESelfViewSwitch(SwitchEntity):
-    """Representation of a Webex CE self view switch."""
+class WebexCESwitch(WebexCEEntity, SwitchEntity):
+    """Switch that follows a status value of the device."""
 
-    _attr_has_entity_name = True
-    _attr_translation_key = "self_view"
+    entity_description: WebexCESwitchEntityDescription
+    _attr_is_on = False
 
-    def __init__(self, client, device_info: DeviceInfo) -> None:
+    def __init__(
+        self, data: WebexCEData, description: WebexCESwitchEntityDescription
+    ) -> None:
         """Initialize the switch."""
-        self._client = client
-        self._attr_device_info = device_info
-        serial = next(iter(device_info["identifiers"]))[1]
-        self._attr_unique_id = f"{serial}_self_view"
-        self._attr_is_on = False
-        self._attr_icon = "mdi:monitor-eye"
+        super().__init__(data, description.key)
+        self.entity_description = description
+
+    @property
+    def icon(self) -> str | None:
+        """Return the icon for the current state."""
+        if not self.is_on and self.entity_description.icon_off:
+            return self.entity_description.icon_off
+        return self.entity_description.icon
 
     async def async_added_to_hass(self) -> None:
         """Subscribe to device feedback when added to hass."""
         await super().async_added_to_hass()
-        await self._client.subscribe_feedback(
-            self.unique_id,
-            ["Status", "Video", "Selfview", "Mode"],
-            self._handle_feedback,
+        await self._async_subscribe(
+            self.entity_description.status_path, self._handle_feedback
         )
 
     @callback
-    def _handle_feedback(self, params: dict[str, Any], feedback_id: str) -> None:
+    def _handle_feedback(self, params: dict[str, Any], feedback_id: Any) -> None:
         """Handle feedback from the device."""
         _LOGGER.debug("Received feedback for %s: %s", self.unique_id, params)
-        try:
-            mode = (
-                params.get("Status", {})
-                .get("Video", {})
-                .get("Selfview", {})
-                .get("Mode", "Off")
-            )
-            self._attr_is_on = mode == "On"
-            self.async_write_ha_state()
-        except (AttributeError, KeyError, TypeError):
-            _LOGGER.warning("Unexpected feedback format: %s", params)
-
-    async def async_turn_on(self, **kwargs: Any) -> None:
-        """Turn on self view."""
-        try:
-            await self._client.xcommand(["Video", "Selfview", "Set"], Mode="On")
-            self._attr_is_on = True
-            self.async_write_ha_state()
-        except Exception:
-            _LOGGER.exception("Failed to turn on self view")
-            raise
-
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        """Turn off self view."""
-        try:
-            await self._client.xcommand(["Video", "Selfview", "Set"], Mode="Off")
-            self._attr_is_on = False
-            self.async_write_ha_state()
-        except Exception:
-            _LOGGER.exception("Failed to turn off self view")
-            raise
-
-
-class WebexCEPresentationSwitch(SwitchEntity):
-    """Representation of a Webex CE presentation switch."""
-
-    _attr_has_entity_name = True
-    _attr_translation_key = "presentation"
-
-    def __init__(self, client, device_info: DeviceInfo) -> None:
-        """Initialize the switch."""
-        self._client = client
-        self._attr_device_info = device_info
-        serial = next(iter(device_info["identifiers"]))[1]
-        self._attr_unique_id = f"{serial}_presentation"
-        self._attr_is_on = False
-        self._attr_icon = "mdi:presentation"
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to device feedback when added to hass."""
-        await super().async_added_to_hass()
-        await self._client.subscribe_feedback(
-            self.unique_id,
-            ["Status", "Conference", "Presentation", "Mode"],
-            self._handle_feedback,
-        )
-
-    @callback
-    def _handle_feedback(self, params: dict[str, Any], feedback_id: str) -> None:
-        """Handle feedback from the device."""
-        _LOGGER.debug("Received feedback for %s: %s", self.unique_id, params)
-        try:
-            mode = (
-                params.get("Status", {})
-                .get("Conference", {})
-                .get("Presentation", {})
-                .get("Mode", "Off")
-            )
-            self._attr_is_on = mode in ("Sending", "Receiving", "On")
-            self.async_write_ha_state()
-        except (AttributeError, KeyError, TypeError):
-            _LOGGER.warning("Unexpected feedback format: %s", params)
-
-    async def async_turn_on(self, **kwargs: Any) -> None:
-        """Start presentation."""
-        try:
-            await self._client.xcommand(["Presentation", "Start"])
-            self._attr_is_on = True
-            self.async_write_ha_state()
-        except Exception:
-            _LOGGER.exception("Failed to start presentation")
-            raise
-
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        """Stop presentation."""
-        try:
-            await self._client.xcommand(["Presentation", "Stop"])
-            self._attr_is_on = False
-            self.async_write_ha_state()
-        except Exception:
-            _LOGGER.exception("Failed to stop presentation")
-            raise
-
-
-class WebexCEMicrophoneMuteSwitch(SwitchEntity):
-    """Representation of a Webex CE microphone mute switch."""
-
-    _attr_has_entity_name = True
-    _attr_translation_key = "microphone_mute"
-
-    def __init__(self, client, device_info: DeviceInfo) -> None:
-        """Initialize the switch."""
-        self._client = client
-        self._attr_device_info = device_info
-        # Extract serial from device info identifiers
-        serial = next(iter(device_info["identifiers"]))[1]
-        self._attr_unique_id = f"{serial}_microphone_mute"
-        self._attr_is_on = False
-        self._attr_icon = "mdi:microphone"
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to device feedback when added to hass."""
-        await super().async_added_to_hass()
-
-        # Subscribe to microphone mute status updates
-        await self._client.subscribe_feedback(
-            self.unique_id,
-            ["Status", "Audio", "Microphones", "Mute"],
-            self._handle_feedback,
-        )
-
-    @callback
-    def _handle_feedback(self, params: dict[str, Any], feedback_id: str) -> None:
-        """Handle feedback from the device."""
-        _LOGGER.debug("Received feedback for %s: %s", self.unique_id, params)
-
-        # The params dict contains the status path and value
-        # For Status/Audio/Microphones/Mute, the value is at params['Status']['Audio']['Microphones']['Mute']
-        try:
-            mute_status = (
-                params.get("Status", {})
-                .get("Audio", {})
-                .get("Microphones", {})
-                .get("Mute", "Off")
-            )
-        except (AttributeError, KeyError, TypeError):
-            _LOGGER.warning("Unexpected feedback format: %s", params)
-            return
-
-        # "On" means muted, "Off" means unmuted
-        self._attr_is_on = mute_status == "On"
-        self._attr_icon = "mdi:microphone-off" if self._attr_is_on else "mdi:microphone"
+        # Walk the status path through the nested feedback
+        value: Any = params
+        for key in self.entity_description.status_path:
+            if not isinstance(value, dict):
+                _LOGGER.warning("Unexpected feedback format: %s", params)
+                return
+            value = value.get(key, {})
+        self._attr_is_on = self.entity_description.is_on_fn(value)
         self.async_write_ha_state()
 
     async def async_turn_on(self, **kwargs: Any) -> None:
-        """Mute the microphones."""
-        try:
-            await self._client.xcommand(["Audio", "Microphones", "Mute"])
-            self._attr_is_on = True
-            self._attr_icon = "mdi:microphone-off"
-            self.async_write_ha_state()
-        except Exception as err:
-            _LOGGER.error("Failed to mute microphones: %s", err)
-            raise
-
-    async def async_turn_off(self, **kwargs: Any) -> None:
-        """Unmute the microphones."""
-        try:
-            await self._client.xcommand(["Audio", "Microphones", "Unmute"])
-            self._attr_is_on = False
-            self._attr_icon = "mdi:microphone"
-            self.async_write_ha_state()
-        except Exception as err:
-            _LOGGER.error("Failed to unmute microphones: %s", err)
-            raise
-
-
-class WebexCEVideoMuteSwitch(SwitchEntity):
-    """Representation of a Webex CE video mute switch."""
-
-    _attr_has_entity_name = True
-    _attr_translation_key = "video_mute"
-
-    def __init__(self, client, device_info: DeviceInfo) -> None:
-        """Initialize the switch."""
-        self._client = client
-        self._attr_device_info = device_info
-        # Extract serial from device info identifiers
-        serial = next(iter(device_info["identifiers"]))[1]
-        self._attr_unique_id = f"{serial}_video_mute"
-        self._attr_is_on = False
-        self._attr_icon = "mdi:video"
-
-    async def async_added_to_hass(self) -> None:
-        """Subscribe to device feedback when added to hass."""
-        await super().async_added_to_hass()
-
-        # Subscribe to video mute status updates
-        await self._client.subscribe_feedback(
-            self.unique_id,
-            ["Status", "Video", "Input", "MainVideoMute"],
-            self._handle_feedback,
-        )
-
-    @callback
-    def _handle_feedback(self, params: dict[str, Any], feedback_id: str) -> None:
-        """Handle feedback from the device."""
-        _LOGGER.debug("Received feedback for %s: %s", self.unique_id, params)
-
-        # The params dict contains the status path and value
-        # For Status/Video/Input/MainVideoMute, the value is at params['Status']['Video']['Input']['MainVideoMute']
-        try:
-            mute_status = (
-                params.get("Status", {})
-                .get("Video", {})
-                .get("Input", {})
-                .get("MainVideoMute", "Off")
-            )
-        except (AttributeError, KeyError, TypeError):
-            _LOGGER.warning("Unexpected feedback format: %s", params)
-            return
-
-        # "On" means muted, "Off" means unmuted
-        self._attr_is_on = mute_status == "On"
-        self._attr_icon = "mdi:video-off" if self._attr_is_on else "mdi:video"
+        """Turn the switch on."""
+        path, params = self.entity_description.on_command
+        await self._async_command(path, **params)
+        # Optimistically update the state, feedback confirms it later
+        self._attr_is_on = True
         self.async_write_ha_state()
 
-    async def async_turn_on(self, **kwargs: Any) -> None:
-        """Mute the video."""
-        try:
-            await self._client.xcommand(["Video", "Input", "MainVideo", "Mute"])
-            self._attr_is_on = True
-            self._attr_icon = "mdi:video-off"
-            self.async_write_ha_state()
-        except Exception as err:
-            _LOGGER.error("Failed to mute video: %s", err)
-            raise
-
     async def async_turn_off(self, **kwargs: Any) -> None:
-        """Unmute the video."""
-        try:
-            await self._client.xcommand(["Video", "Input", "MainVideo", "Unmute"])
-            self._attr_is_on = False
-            self._attr_icon = "mdi:video"
-            self.async_write_ha_state()
-        except Exception as err:
-            _LOGGER.error("Failed to unmute video: %s", err)
-            raise
+        """Turn the switch off."""
+        path, params = self.entity_description.off_command
+        await self._async_command(path, **params)
+        # Optimistically update the state, feedback confirms it later
+        self._attr_is_on = False
+        self.async_write_ha_state()

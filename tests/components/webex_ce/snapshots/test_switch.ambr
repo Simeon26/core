@@ -1,0 +1,201 @@
+# serializer version: 1
+# name: test_entities[switch.test_device_microphone_mute-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.test_device_microphone_mute',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Microphone mute',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:microphone',
+    'original_name': 'Microphone mute',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'microphone_mute',
+    'unique_id': 'FOC2341P2G6_microphone_mute',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[switch.test_device_microphone_mute-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Microphone mute',
+      'icon': 'mdi:microphone',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.test_device_microphone_mute',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_entities[switch.test_device_presentation-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.test_device_presentation',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Presentation',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:presentation',
+    'original_name': 'Presentation',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'presentation',
+    'unique_id': 'FOC2341P2G6_presentation',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[switch.test_device_presentation-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Presentation',
+      'icon': 'mdi:presentation',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.test_device_presentation',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_entities[switch.test_device_self_view-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.test_device_self_view',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Self view',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:monitor-eye',
+    'original_name': 'Self view',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'self_view',
+    'unique_id': 'FOC2341P2G6_self_view',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[switch.test_device_self_view-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Self view',
+      'icon': 'mdi:monitor-eye',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.test_device_self_view',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---
+# name: test_entities[switch.test_device_video_mute-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'switch',
+    'entity_category': None,
+    'entity_id': 'switch.test_device_video_mute',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Video mute',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:video',
+    'original_name': 'Video mute',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'video_mute',
+    'unique_id': 'FOC2341P2G6_video_mute',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[switch.test_device_video_mute-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Video mute',
+      'icon': 'mdi:video',
+    }),
+    'context': <ANY>,
+    'entity_id': 'switch.test_device_video_mute',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'off',
+  })
+# ---

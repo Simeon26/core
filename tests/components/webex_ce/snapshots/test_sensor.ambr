@@ -1,0 +1,581 @@
+# serializer version: 1
+# name: test_entities[sensor.test_device_ambient_noise-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_ambient_noise',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Ambient noise',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:volume-high',
+    'original_name': 'Ambient noise',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ambient_noise',
+    'unique_id': 'FOC2341P2G6_ambient_noise',
+    'unit_of_measurement': 'dBA',
+  })
+# ---
+# name: test_entities[sensor.test_device_ambient_noise-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Ambient noise',
+      'icon': 'mdi:volume-high',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': 'dBA',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_ambient_noise',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_ambient_temperature-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_ambient_temperature',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Ambient temperature',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 1,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.TEMPERATURE: 'temperature'>,
+    'original_icon': None,
+    'original_name': 'Ambient temperature',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'ambient_temperature',
+    'unique_id': 'FOC2341P2G6_ambient_temperature',
+    'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+  })
+# ---
+# name: test_entities[sensor.test_device_ambient_temperature-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'temperature',
+      'friendly_name': 'Test Device Ambient temperature',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': <UnitOfTemperature.CELSIUS: '°C'>,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_ambient_temperature',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_call_status-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        'idle',
+        'connecting',
+        'ringing',
+        'connected',
+        'on_hold',
+        'disconnecting',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_call_status',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Call status',
+    'options': dict({
+    }),
+    'original_device_class': <SensorDeviceClass.ENUM: 'enum'>,
+    'original_icon': 'mdi:phone-off',
+    'original_name': 'Call status',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'call_status',
+    'unique_id': 'FOC2341P2G6_call_status',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[sensor.test_device_call_status-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'enum',
+      'friendly_name': 'Test Device Call status',
+      'icon': 'mdi:phone-off',
+      'options': list([
+        'idle',
+        'connecting',
+        'ringing',
+        'connected',
+        'on_hold',
+        'disconnecting',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_call_status',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'idle',
+  })
+# ---
+# name: test_entities[sensor.test_device_current_meeting-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_current_meeting',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Current meeting',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:calendar-clock',
+    'original_name': 'Current meeting',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'current_meeting',
+    'unique_id': 'FOC2341P2G6_current_meeting',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[sensor.test_device_current_meeting-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'end_time': None,
+      'friendly_name': 'Test Device Current meeting',
+      'icon': 'mdi:calendar-clock',
+      'meeting_id': None,
+      'meeting_platform': None,
+      'organizer_email': None,
+      'organizer_name': None,
+      'privacy': None,
+      'start_time': None,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_current_meeting',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_network_status-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        'connected',
+        'disconnected',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_network_status',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Network status',
+    'options': dict({
+    }),
+    'original_device_class': <SensorDeviceClass.ENUM: 'enum'>,
+    'original_icon': 'mdi:lan-connect',
+    'original_name': 'Network status',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'network_status',
+    'unique_id': 'FOC2341P2G6_network_status',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[sensor.test_device_network_status-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'enum',
+      'friendly_name': 'Test Device Network status',
+      'icon': 'mdi:lan-connect',
+      'options': list([
+        'connected',
+        'disconnected',
+      ]),
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_network_status',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_next_meeting-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_next_meeting',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Next meeting',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:calendar-arrow-right',
+    'original_name': 'Next meeting',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'next_meeting',
+    'unique_id': 'FOC2341P2G6_next_meeting',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[sensor.test_device_next_meeting-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'end_time': None,
+      'friendly_name': 'Test Device Next meeting',
+      'icon': 'mdi:calendar-arrow-right',
+      'meeting_id': None,
+      'meeting_platform': None,
+      'organizer_email': None,
+      'organizer_name': None,
+      'privacy': None,
+      'start_time': None,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_next_meeting',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_relative_humidity-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_relative_humidity',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Relative humidity',
+    'options': dict({
+    }),
+    'original_device_class': <SensorDeviceClass.HUMIDITY: 'humidity'>,
+    'original_icon': None,
+    'original_name': 'Relative humidity',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'relative_humidity',
+    'unique_id': 'FOC2341P2G6_relative_humidity',
+    'unit_of_measurement': '%',
+  })
+# ---
+# name: test_entities[sensor.test_device_relative_humidity-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'humidity',
+      'friendly_name': 'Test Device Relative humidity',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': '%',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_relative_humidity',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_room_occupancy-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'options': list([
+        'yes',
+        'no',
+      ]),
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_room_occupancy',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Room occupancy',
+    'options': dict({
+    }),
+    'original_device_class': <SensorDeviceClass.ENUM: 'enum'>,
+    'original_icon': 'mdi:account-multiple',
+    'original_name': 'Room occupancy',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'room_occupancy',
+    'unique_id': 'FOC2341P2G6_room_occupancy',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[sensor.test_device_room_occupancy-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'availability': None,
+      'capacity': None,
+      'close_proximity': None,
+      'device_class': 'enum',
+      'friendly_name': 'Test Device Room occupancy',
+      'icon': 'mdi:account-multiple',
+      'options': list([
+        'yes',
+        'no',
+      ]),
+      'people_count': None,
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_room_occupancy',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_sound_level-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': dict({
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+    }),
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_sound_level',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Sound level',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:waveform',
+    'original_name': 'Sound level',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'sound_level',
+    'unique_id': 'FOC2341P2G6_sound_level',
+    'unit_of_measurement': 'dBA',
+  })
+# ---
+# name: test_entities[sensor.test_device_sound_level-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Sound level',
+      'icon': 'mdi:waveform',
+      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+      'unit_of_measurement': 'dBA',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_sound_level',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[sensor.test_device_system_uptime-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'sensor',
+    'entity_category': None,
+    'entity_id': 'sensor.test_device_system_uptime',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'System uptime',
+    'options': dict({
+      'sensor': dict({
+        'suggested_display_precision': 2,
+      }),
+    }),
+    'original_device_class': <SensorDeviceClass.DURATION: 'duration'>,
+    'original_icon': 'mdi:timer',
+    'original_name': 'System uptime',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'system_uptime',
+    'unique_id': 'FOC2341P2G6_system_uptime',
+    'unit_of_measurement': 's',
+  })
+# ---
+# name: test_entities[sensor.test_device_system_uptime-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'duration',
+      'friendly_name': 'Test Device System uptime',
+      'icon': 'mdi:timer',
+      'unit_of_measurement': 's',
+    }),
+    'context': <ANY>,
+    'entity_id': 'sensor.test_device_system_uptime',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---

@@ -1,0 +1,151 @@
+# serializer version: 1
+# name: test_entities[button.test_device_accept_call-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'button',
+    'entity_category': None,
+    'entity_id': 'button.test_device_accept_call',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Accept call',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:phone-check',
+    'original_name': 'Accept call',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'accept_call',
+    'unique_id': 'FOC2341P2G6_accept_call',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[button.test_device_accept_call-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Accept call',
+      'icon': 'mdi:phone-check',
+    }),
+    'context': <ANY>,
+    'entity_id': 'button.test_device_accept_call',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[button.test_device_disconnect_call-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'button',
+    'entity_category': None,
+    'entity_id': 'button.test_device_disconnect_call',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Disconnect call',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:phone-hangup',
+    'original_name': 'Disconnect call',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'disconnect_call',
+    'unique_id': 'FOC2341P2G6_disconnect_call',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[button.test_device_disconnect_call-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Disconnect call',
+      'icon': 'mdi:phone-hangup',
+    }),
+    'context': <ANY>,
+    'entity_id': 'button.test_device_disconnect_call',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
+# name: test_entities[button.test_device_reject_call-entry]
+  EntityRegistryEntrySnapshot({
+    'aliases': set({
+    }),
+    'area_id': None,
+    'capabilities': None,
+    'config_entry_id': <ANY>,
+    'config_subentry_id': <ANY>,
+    'device_class': None,
+    'device_id': <ANY>,
+    'disabled_by': None,
+    'domain': 'button',
+    'entity_category': None,
+    'entity_id': 'button.test_device_reject_call',
+    'has_entity_name': True,
+    'hidden_by': None,
+    'icon': None,
+    'id': <ANY>,
+    'labels': set({
+    }),
+    'name': None,
+    'object_id_base': 'Reject call',
+    'options': dict({
+    }),
+    'original_device_class': None,
+    'original_icon': 'mdi:phone-cancel',
+    'original_name': 'Reject call',
+    'platform': 'webex_ce',
+    'previous_unique_id': None,
+    'suggested_object_id': None,
+    'supported_features': 0,
+    'translation_key': 'reject_call',
+    'unique_id': 'FOC2341P2G6_reject_call',
+    'unit_of_measurement': None,
+  })
+# ---
+# name: test_entities[button.test_device_reject_call-state]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'friendly_name': 'Test Device Reject call',
+      'icon': 'mdi:phone-cancel',
+    }),
+    'context': <ANY>,
+    'entity_id': 'button.test_device_reject_call',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'unknown',
+  })
+# ---
